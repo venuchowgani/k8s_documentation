@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secret-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: secret-app
+  template:
+    metadata:
+      labels:
+        app: secret-app
+    spec:
+      containers:
+        - name: mycontainer
+          image: nginx
+          command: ["/bin/sh", "-c"]
+          args: ["sleep 3600"]
+          env:
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: username
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: password
+          volumeMounts:
+            - name: secret-volume
+              mountPath: "/etc/secret"
+              readOnly: true
+      volumes:
+        - name: secret-volume
+          secret:
+            secretName: my-secret

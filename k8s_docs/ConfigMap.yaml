@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config-volume
+data:
+  app.properties: |
+    APP_MODE=staging
+    APP_VERSION=2.1.0
