@@ -1,0 +1,13 @@
+# privileged-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: privileged-pod
+  namespace: ns-privileged
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    command: ["sleep", "3600"]
+    securityContext:
+      privileged: true
